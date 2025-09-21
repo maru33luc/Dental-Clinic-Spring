@@ -37,6 +37,13 @@ public class PatientController {
         return patientService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Patient> findById(@PathVariable Long id) throws ResourceNotFoundException {
+        return patientService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró el paciente con id: " + id));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) throws ResourceNotFoundException {
         patientService.delete(id);

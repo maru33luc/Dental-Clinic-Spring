@@ -21,27 +21,40 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register (
-            @RequestBody RegisterRequest request) {
-            return ResponseEntity.ok(authenticationService.register(request));
+    public ResponseEntity<AuthenticationResponse> register(
+            @RequestBody @jakarta.validation.Valid RegisterRequest request) {
+        if (request.getFirstname() == null || request.getLastname() == null || 
+            request.getEmail() == null || request.getPassword() == null ||
+            request.getFirstname().trim().isEmpty() || request.getLastname().trim().isEmpty() ||
+            request.getEmail().trim().isEmpty() || request.getPassword().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(authenticationService.register(request));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login (
+    public ResponseEntity<AuthenticationResponse> login(
             @RequestBody AuthenticationRequest request,
             HttpServletResponse response
     ) {
-        // Obtenemos la respuesta de autenticación que incluye el token
-        AuthenticationResponse authResponse = authenticationService.login(request, response);
-        
-        // Aseguramos que la cookie tenga la configuración correcta
-        Cookie jwtCookie = new Cookie("jwt", authResponse.getToken());
-        jwtCookie.setPath("/");
-        jwtCookie.setHttpOnly(true);
-        jwtCookie.setMaxAge(24 * 60 * 60); // 24 horas
-        response.addCookie(jwtCookie);
-        
-        return ResponseEntity.ok(authResponse);
+        try {
+            // Obtenemos la respuesta de autenticación que incluye el token
+            AuthenticationResponse authResponse = authenticationService.login(request, response);
+            
+            // Aseguramos que la cookie tenga la configuración correcta
+            Cookie jwtCookie = new Cookie("jwt", authResponse.getToken());
+            jwtCookie.setPath("/");
+            jwtCookie.setHttpOnly(true);
+            jwtCookie.setMaxAge(24 * 60 * 60); // 24 horas
+            response.addCookie(jwtCookie);
+            
+            return ResponseEntity.ok(authResponse);
+        } catch (RuntimeException e) {
+            if (e.getMessage().equals("Invalid credentials")) {
+                return ResponseEntity.status(401).build();
+            }
+            throw e;
+        }
     }
 
     @GetMapping(value = "/login", produces = MediaType.TEXT_HTML_VALUE)

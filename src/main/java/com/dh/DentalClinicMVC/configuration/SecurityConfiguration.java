@@ -25,25 +25,25 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin())) // Permite H2
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/auth/**",
-                                "/index.html",
-                                "/",
-                                "/js/**",
-                                "/css/**",
-                                "/login.html",
-                                "/register.html",
-                                "/h2-console/**",
-//                                "/dentistList.html",
-//                                "/dentistAdd.html",
-//                                "/odontologos/**",
-                                "/error",
-                                "/*.js",
-                                "/*.css",
-                                "/*.html",
-                                "/favicon.ico"
-                        ).permitAll()
-                        .anyRequest().authenticated()
+                                .requestMatchers(
+                                        "/auth/**",
+                                        "/index.html",
+                                        "/",
+                                        "/js/**",
+                                        "/css/**",
+                                        "/login.html",
+                                        "/register.html",
+                                        "/h2-console/**",
+                                        "/dentistList.html",
+                                        "/dentistAdd.html",
+                                        "/api/v1/auth/**",
+                                        "/error",
+                                        "/*.js",
+                                        "/*.css",
+                                        "/*.html",
+                                        "/favicon.ico"
+                                ).permitAll()
+                                .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

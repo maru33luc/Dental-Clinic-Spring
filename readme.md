@@ -1,104 +1,283 @@
-# DentalClinicMVC
+# 🦷 DentalClinicMVC
 
-**Dental Clinic Management System** developed with Spring Boot, implementing MVC architecture, JWT-based security, and an interactive web interface.
+Sistema de Gestión para Clínicas Dentales desarrollado con tecnologías modernas y arquitectura robusta.
 
-## 🚀 Overview
+## 🚀 Tecnologías Utilizadas
 
-DentalClinicMVC allows you to manage users, dentists, patients, and appointments with a robust authentication system and clear separation of concerns.
-It is designed following development best practices, with well-defined layers and a consistent data flow.
+### Backend
+- **Java 21** - Última versión LTS para máximo rendimiento y características modernas
+- **Spring Boot 3.2.3** - Framework principal
+  - Spring Web MVC - Para la capa web
+  - Spring Data JPA - Para persistencia
+  - Spring Security - Para seguridad y autenticación
+  - Spring Validation - Para validación de datos
+- **JWT (JSON Web Tokens)** - Autenticación stateless
+- **H2 Database** - Base de datos en memoria para desarrollo
+- **Lombok** - Reducción de código boilerplate
+- **SpringDoc OpenAPI** - Documentación automática de API (Swagger)
 
-## 📦 Project Structure
+### Frontend
+- **HTML5** 
+- **JavaScript** (Vanilla JS)
+- **CSS3**
+- **Thymeleaf** - Motor de plantillas
 
-### 1. Authentication Layer (`authentication/`)
+### Testing
+- **JUnit 5** - Framework de testing
+- **Mockito** - Framework de mocking
+- **Spring Security Test** - Utilidades para testing de seguridad
+- **MockMVC** - Testing de endpoints REST
 
-* `AuthenticationController`: Handles login and registration.
-* `AuthenticationService`: Authentication logic.
-* DTOs: `AuthenticationRequest/Response`, `RegisterRequest`.
+### Herramientas de Desarrollo
+- **Maven** - Gestión de dependencias y construcción
+- **Git** - Control de versiones
+- **IntelliJ IDEA/VS Code** - IDEs recomendados
 
-### 2. Security Configuration (`configuration/`)
+## 📦 Estructura del Proyecto
 
-* `SecurityConfiguration`: Security rules.
-* `JwtAuthenticationFilter`: Validates JWT in requests.
-* `JwtService`: Generates and validates tokens.
-* `ApplicationConfig`: General configuration.
+```
+src/
+├── main/
+│   ├── java/
+│   │   └── com/dh/DentalClinicMVC/
+│   │       ├── authentication/          # Autenticación y JWT
+│   │       │   ├── AuthenticationController.java
+│   │       │   ├── AuthenticationService.java
+│   │       │   ├── AuthenticationRequest.java
+│   │       │   ├── AuthenticationResponse.java
+│   │       │   └── RegisterRequest.java
+│   │       ├── configuration/           # Configuración de Spring
+│   │       │   ├── SecurityConfiguration.java
+│   │       │   ├── JwtAuthenticationFilter.java
+│   │       │   ├── JwtService.java
+│   │       │   └── ApplicationConfig.java
+│   │       ├── controller/             # Controladores REST
+│   │       │   ├── AppointmentController.java
+│   │       │   ├── DentistController.java
+│   │       │   └── PatientController.java
+│   │       ├── dto/                   # Objetos de Transferencia
+│   │       │   └── AppointmentDTO.java
+│   │       ├── entity/                # Entidades JPA
+│   │       │   ├── User.java
+│   │       │   ├── Role.java
+│   │       │   ├── Dentist.java
+│   │       │   ├── Patient.java
+│   │       │   ├── Appointment.java
+│   │       │   └── Address.java
+│   │       ├── exception/             # Manejo de Excepciones
+│   │       │   ├── GlobalException.java
+│   │       │   └── ResourceNotFoundException.java
+│   │       ├── repository/            # Repositorios JPA
+│   │       │   ├── IUserRepository.java
+│   │       │   ├── IDentistRepository.java
+│   │       │   ├── IPatientRepository.java
+│   │       │   └── IAppointmentRepository.java
+│   │       └── service/               # Servicios
+│   │           ├── interfaces/
+│   │           │   ├── IAppointmentService.java
+│   │           │   ├── IDentistService.java
+│   │           │   └── IPatientService.java
+│   │           └── impl/
+│   │               ├── AppointmentService.java
+│   │               ├── DentistServiceImpl.java
+│   │               └── PatientService.java
+│   └── resources/
+│       ├── static/                    # Recursos Web
+│       │   ├── js/
+│       │   │   ├── delete_dentist.js
+│       │   │   ├── get_dentist.js
+│       │   │   ├── post_dentist.js
+│       │   │   └── update_dentist.js
+│       │   ├── index.html
+│       │   ├── login.html
+│       │   ├── register.html
+│       │   ├── dentistList.html
+│       │   └── dentistAdd.html
+│       └── templates/                 # Plantillas Thymeleaf
+└── test/                             # Tests
+    └── java/
+        └── com/dh/DentalClinicMVC/
+            ├── controller/
+            │   ├── AppointmentControllerTest.java
+            │   ├── AuthenticationControllerTest.java
+            │   ├── DentistControllerTest.java
+            │   └── PatientControllerTest.java
+            └── service/
+                └── PatientServiceTest.java
 
-### 3. Controllers (`controller/`)
+## � Características de Seguridad
 
-* `AppointmentController`, `DentistController`, `PatientController`.
+### Autenticación
+- Implementación JWT completa
+- Manejo de tokens en cookies seguras
+- Refresh tokens
+- Roles y permisos (ADMIN, USER)
+- Endpoints protegidos
+- Validación de datos en registro
 
-### 4. Entities (`entity/`)
+### Seguridad Web
+- CSRF deshabilitado para API REST
+- Headers de seguridad configurados
+- Gestión de sesiones stateless
+- Configuración de CORS
+- Manejo de opciones de frame (H2 Console)
 
-* `User`, `Role`, `Dentist`, `Patient`, `Appointment`, `Address`.
+## � Modelos de Datos y Relaciones
 
-### 5. Repositories (`repository/`)
+### Entidades Principales
+- **User**
+  - Gestión de usuarios del sistema
+  - Roles y permisos
+  - Autenticación
 
-* Extend `JpaRepository`: `IUserRepository`, `IDentistRepository`, `IPatientRepository`, `IAppointmentRepository`.
+- **Dentist**
+  - Información profesional
+  - Registro profesional
+  - Gestión de turnos
 
-### 6. Services (`service/`)
+- **Patient**
+  - Datos personales
+  - Historia clínica
+  - Dirección vinculada
+  - Turnos asociados
 
-* Interfaces: `IUserService`, `IDentistService`, `IPatientService`, `IAppointmentService`.
-* Implementations (`impl/`): `DentistServiceImpl`, `PatientService`, `AppointmentService`.
+- **Appointment**
+  - Gestión de turnos
+  - Relaciones con dentista y paciente
+  - Fecha y hora
+  - Estado del turno
 
-### 7. Frontend (`resources/static/`)
+### Relaciones
+- `User` ↔ `Role` (Enumeración)
+- `Dentist` ↔ `Appointment` (Uno a Muchos)
+- `Patient` ↔ `Address` (Uno a Uno)
+- `Patient` ↔ `Appointment` (Uno a Muchos)
+- `Appointment` ↔ `Patient` / `Dentist` (Muchos a Uno)
 
-* HTML: `index.html`, `login.html`, `register.html`, `dentistList.html`, `dentistAdd.html`.
-* JS: `delete_dentist.js`, `get_dentist.js`, `post_dentist.js`, `update_dentist.js`.
+## 🛠 Características Técnicas
 
-### 8. Exception Handling (`exception/`)
+### Patrones Implementados
+- **MVC** - Separación de responsabilidades
+- **DTO** - Transferencia de datos optimizada
+- **Repository** - Abstracción de datos
+- **Service Layer** - Lógica de negocio encapsulada
+- **Builder** - Construcción de objetos complejos
+- **Dependency Injection** - Acoplamiento reducido
 
-* `GlobalException`, `ResourceNotFoundException`.
+### Testing
+- Tests unitarios para servicios
+- Tests de integración para controllers
+- Mocking de dependencias
+- Cobertura de código
+- Tests de seguridad
 
-### 9. DTOs (`dto/`)
+### API REST
+- CRUD completo para todas las entidades
+- Validación de datos en endpoints
+- Manejo de errores consistente
+- Documentación con Swagger
+- Respuestas HTTP apropiadas
 
-* `AppointmentDTO`.
+## 🚀 Cómo Empezar
 
-### 10. Tests (`test/`)
+### Requisitos Previos
+- Java 21 o superior
+- Maven 3.6 o superior
+- Git
 
-* Unit tests for services and business logic.
+### Configuración
 
-## 🔗 Entity Relationships
+1. Clonar el repositorio:
+```bash
+git clone https://github.com/maru33luc/Dental-Clinic-Spring.git
+```
 
-* `User` ↔ `Role` (enumeration)
-* `Dentist` ↔ `Appointment` (One-to-Many)
-* `Patient` ↔ `Address` (One-to-One)
-* `Patient` ↔ `Appointment` (One-to-Many)
-* `Appointment` ↔ `Patient` / `Dentist` (Many-to-One)
+2. Configurar variable de entorno JWT:
+```bash
+export JWT_SECRET=tu_clave_secreta_aqui
+```
 
-## 🛠 Key Features
+3. Compilar el proyecto:
+```bash
+mvn clean install
+```
 
-* JWT-based authentication and authorization.
-* Full CRUD for dentists, patients, and appointments.
-* Dynamic web interface with HTML and JavaScript.
-* Global exception handling.
-* Layered architecture and SOLID principles.
-* Security powered by Spring Security.
+4. Ejecutar:
+```bash
+mvn spring-boot:run
+```
 
-## 🌐 Application Flow
+### Acceso
+- **API**: http://localhost:8080
+- **Swagger**: http://localhost:8080/swagger-ui.html
+- **H2 Console**: http://localhost:8080/h2-console
 
-1. The user authenticates via JWT.
-2. Gains access to features based on their role.
-3. Frontend and backend communicate through REST APIs.
-4. Services handle business logic.
-5. Repositories interact with the database.
-6. The response is returned to the frontend.
+## 🔄 Flujo de la Aplicación
 
-## 💡 Highlights and Differentiators
+1. **Autenticación**
+   - Registro de usuario
+   - Login y generación de JWT
+   - Almacenamiento de token en cookie segura
 
-* Advanced security with JWT integration.
-* Clear separation of concerns across layers.
-* Consistent and maintainable data flow.
-* Solid foundation for adding new features and microservices.
+2. **Gestión de Pacientes**
+   - Alta de pacientes
+   - Actualización de datos
+   - Vinculación con dirección
+   - Consulta de historial
 
-## 🏁 Getting Started
+3. **Gestión de Odontólogos**
+   - Registro de profesionales
+   - Gestión de disponibilidad
+   - Consulta de turnos
 
-1. Clone the repository.
-2. Configure the database in `application.properties`.
-3. Run `mvn spring-boot:run`.
-4. Access the app at `http://localhost:8080`.
+4. **Gestión de Turnos**
+   - Creación de turnos
+   - Validación de disponibilidad
+   - Notificaciones
+   - Cancelación y reprogramación
+
+## 👥 Contribución
+
+1. Fork del repositorio
+2. Crear branch de feature (`git checkout -b feature/NuevaCaracteristica`)
+3. Commit de cambios (`git commit -am 'Agrega nueva característica'`)
+4. Push al branch (`git push origin feature/NuevaCaracteristica`)
+5. Crear Pull Request
+
+## 📝 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para detalles
+
+## 🌟 Características Futuras
+
+- [ ] Integración con sistema de pagos
+- [ ] Notificaciones por email
+- [ ] App móvil
+- [ ] Reportes y estadísticas
+- [ ] Chat en tiempo real
+- [ ] Integración con calendario
+
+   * Linux / macOS:
+
+     ```bash
+     export JWT_SECRET=$(openssl rand -base64 64)
+     ```
+   * Windows (PowerShell):
+
+     ```powershell
+     setx JWT_SECRET "your-strong-secret-key"
+     ```
+
+   The application reads this value via `@Value("${jwt.secret}")`.
+
+4. Run `mvn spring-boot:run`.
+
+5. Access the app at `http://localhost:8080`.
+
+6. Explore the API docs at `http://localhost:8080/swagger-ui.html`.
 
 ## 📚 Future Improvements
 
-* Swagger implementation for automatic API documentation.
 * Email notifications for appointments.
 * Metrics dashboard and admin statistics.
 

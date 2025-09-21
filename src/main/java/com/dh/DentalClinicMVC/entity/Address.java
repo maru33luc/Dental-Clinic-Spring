@@ -46,7 +46,7 @@ public class Address {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 
@@ -64,5 +64,10 @@ public class Address {
 
     public void setProvince(String province) {
         this.province = province;
+    }
+
+    public void setLocality(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setLocality'");
     }
 }

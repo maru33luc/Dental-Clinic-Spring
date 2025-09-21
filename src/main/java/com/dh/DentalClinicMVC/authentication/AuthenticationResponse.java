@@ -1,14 +1,15 @@
 package com.dh.DentalClinicMVC.authentication;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class AuthenticationResponse {
     private String token;
+
+   
 }
