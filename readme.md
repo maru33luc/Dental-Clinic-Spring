@@ -1,49 +1,50 @@
 # DentalClinicMVC
 
-**Sistema de gestión para clínicas dentales** desarrollado con Spring Boot, implementando arquitectura MVC, seguridad basada en JWT y una interfaz web interactiva.
+**Dental Clinic Management System** developed with Spring Boot, implementing MVC architecture, JWT-based security, and an interactive web interface.
 
-## 🚀 Descripción General
+## 🚀 Overview
 
-DentalClinicMVC permite gestionar usuarios, odontólogos, pacientes y citas, con un sistema de autenticación robusto y una separación clara de responsabilidades. Está diseñado siguiendo buenas prácticas de desarrollo, con capas bien definidas y flujo de datos consistente.
+DentalClinicMVC allows you to manage users, dentists, patients, and appointments with a robust authentication system and clear separation of concerns.
+It is designed following development best practices, with well-defined layers and a consistent data flow.
 
-## 📦 Estructura del Proyecto
+## 📦 Project Structure
 
-### 1. Capa de Autenticación (`authentication/`)
+### 1. Authentication Layer (`authentication/`)
 
-* `AuthenticationController`: Login y registro.
-* `AuthenticationService`: Lógica de autenticación.
+* `AuthenticationController`: Handles login and registration.
+* `AuthenticationService`: Authentication logic.
 * DTOs: `AuthenticationRequest/Response`, `RegisterRequest`.
 
-### 2. Configuración de Seguridad (`configuration/`)
+### 2. Security Configuration (`configuration/`)
 
-* `SecurityConfiguration`: Reglas de seguridad.
-* `JwtAuthenticationFilter`: Valida JWT en requests.
-* `JwtService`: Genera y valida tokens.
-* `ApplicationConfig`: Configuración general.
+* `SecurityConfiguration`: Security rules.
+* `JwtAuthenticationFilter`: Validates JWT in requests.
+* `JwtService`: Generates and validates tokens.
+* `ApplicationConfig`: General configuration.
 
-### 3. Controladores (`controller/`)
+### 3. Controllers (`controller/`)
 
 * `AppointmentController`, `DentistController`, `PatientController`.
 
-### 4. Entidades (`entity/`)
+### 4. Entities (`entity/`)
 
 * `User`, `Role`, `Dentist`, `Patient`, `Appointment`, `Address`.
 
-### 5. Repositorios (`repository/`)
+### 5. Repositories (`repository/`)
 
-* Extienden de `JpaRepository`: `IUserRepository`, `IDentistRepository`, `IPatientRepository`, `IAppointmentRepository`.
+* Extend `JpaRepository`: `IUserRepository`, `IDentistRepository`, `IPatientRepository`, `IAppointmentRepository`.
 
-### 6. Servicios (`service/`)
+### 6. Services (`service/`)
 
 * Interfaces: `IUserService`, `IDentistService`, `IPatientService`, `IAppointmentService`.
-* Implementaciones (`impl/`): `DentistServiceImpl`, `PatientService`, `AppointmentService`.
+* Implementations (`impl/`): `DentistServiceImpl`, `PatientService`, `AppointmentService`.
 
 ### 7. Frontend (`resources/static/`)
 
 * HTML: `index.html`, `login.html`, `register.html`, `dentistList.html`, `dentistAdd.html`.
 * JS: `delete_dentist.js`, `get_dentist.js`, `post_dentist.js`, `update_dentist.js`.
 
-### 8. Manejo de Excepciones (`exception/`)
+### 8. Exception Handling (`exception/`)
 
 * `GlobalException`, `ResourceNotFoundException`.
 
@@ -51,54 +52,54 @@ DentalClinicMVC permite gestionar usuarios, odontólogos, pacientes y citas, con
 
 * `AppointmentDTO`.
 
-### 10. Pruebas (`test/`)
+### 10. Tests (`test/`)
 
-* Pruebas unitarias para servicios y lógica de negocio.
+* Unit tests for services and business logic.
 
-## 🔗 Relaciones entre Entidades
+## 🔗 Entity Relationships
 
-* `User` ↔ `Role` (enumeración)
+* `User` ↔ `Role` (enumeration)
 * `Dentist` ↔ `Appointment` (One-to-Many)
 * `Patient` ↔ `Address` (One-to-One)
 * `Patient` ↔ `Appointment` (One-to-Many)
 * `Appointment` ↔ `Patient` / `Dentist` (Many-to-One)
 
-## 🛠 Características Principales
+## 🛠 Key Features
 
-* Autenticación y autorización basada en JWT.
-* CRUD completo para odontólogos, pacientes y citas.
-* Interfaz web dinámica con HTML y JavaScript.
-* Manejo global de excepciones.
-* Arquitectura en capas y principios SOLID.
-* Seguridad con Spring Security.
+* JWT-based authentication and authorization.
+* Full CRUD for dentists, patients, and appointments.
+* Dynamic web interface with HTML and JavaScript.
+* Global exception handling.
+* Layered architecture and SOLID principles.
+* Security powered by Spring Security.
 
-## 🌐 Flujo de la Aplicación
+## 🌐 Application Flow
 
-1. El usuario se autentica mediante JWT.
-2. Accede a las funcionalidades según su rol.
-3. Frontend y backend se comunican mediante API REST.
-4. Los servicios procesan la lógica de negocio.
-5. Los repositorios interactúan con la base de datos.
-6. La respuesta regresa al frontend.
+1. The user authenticates via JWT.
+2. Gains access to features based on their role.
+3. Frontend and backend communicate through REST APIs.
+4. Services handle business logic.
+5. Repositories interact with the database.
+6. The response is returned to the frontend.
 
-## 💡 Novedades y Diferenciadores
+## 💡 Highlights and Differentiators
 
-* Integración de JWT con seguridad avanzada.
-* Capas separadas con responsabilidades claras.
-* Flujo de datos consistente y mantenible.
-* Base sólida para agregar nuevas funcionalidades y microservicios.
+* Advanced security with JWT integration.
+* Clear separation of concerns across layers.
+* Consistent and maintainable data flow.
+* Solid foundation for adding new features and microservices.
 
-## 🏁 Comenzando
+## 🏁 Getting Started
 
-1. Clonar el repositorio.
-2. Configurar la base de datos en `application.properties`.
-3. Ejecutar `mvn spring-boot:run`.
-4. Acceder a la aplicación en `http://localhost:8080`.
+1. Clone the repository.
+2. Configure the database in `application.properties`.
+3. Run `mvn spring-boot:run`.
+4. Access the app at `http://localhost:8080`.
 
-## 📚 Futuras Mejoras
+## 📚 Future Improvements
 
-* Implementación de Swagger para documentación automática de API.
-* Notificaciones por correo para citas.
-* Dashboard de métricas y estadísticas para administración.
+* Swagger implementation for automatic API documentation.
+* Email notifications for appointments.
+* Metrics dashboard and admin statistics.
 
 ---
